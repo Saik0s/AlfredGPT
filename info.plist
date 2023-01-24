@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string></string>
+	<string>me.igortarasenko.AlfredGPT</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
@@ -112,13 +112,13 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string></string>
+	<string>Igor Tarasenko</string>
 	<key>description</key>
-	<string></string>
+	<string>Alfred workflow for generating completion using OpenAI Completion API</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>GPT Assist</string>
+	<string>AlfredGPT</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -184,15 +184,14 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>query=$1
+				<string>#!/bin/sh
 
-source $HOME/.zshrc
-
-python3 alfred.py "$query"</string>
+export OPENAI_API_KEY=""
+python3 alfred.py "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string></string>
+				<string>main.sh</string>
 				<key>type</key>
 				<integer>5</integer>
 			</dict>
@@ -298,7 +297,7 @@ python3 alfred.py "$query"</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>Alfred workflow for generating completion using OpenAI Completion API</string>
 	<key>uidata</key>
 	<dict>
 		<key>006A355A-0FD0-4749-8238-4429581CC49C</key>
@@ -367,7 +366,11 @@ python3 alfred.py "$query"</string>
 	</dict>
 	<key>userconfigurationconfig</key>
 	<array/>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>0.1.0</string>
 	<key>webaddress</key>
-	<string></string>
+	<string>igortarasenko.me</string>
 </dict>
 </plist>

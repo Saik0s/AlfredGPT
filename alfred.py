@@ -2,8 +2,9 @@
 # encoding: utf-8
 
 import sys
-import requests
 import os
+import json
+import urllib.request
 
 if not "OPENAI_API_KEY" in os.environ:
     sys.stdout.write("Error: OPENAI_API_KEY not set")
@@ -42,13 +43,7 @@ if query.startswith("code:"):
 prompt = query
 
 # Make the request to the API
-response = requests.post(
-    "https://api.openai.com/v1/completions",
-    headers={
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}",
-    },
-    json={
+data = json.dumps({
         "model": model,
         "prompt": prompt,
         "temperature": temperature,
@@ -57,13 +52,19 @@ response = requests.post(
         "frequency_penalty": frequency_penalty,
         "presence_penalty": presence_penalty,
         "stop": "\n###\n"
-    },
-)
+    }).encode("utf-8")
+req = urllib.request.Request("https://api.openai.com/v1/completions", data=data, headers={
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {api_key}",
+    }, method='POST')
+
+response = urllib.request.urlopen(req)
 
 # Get the generated text from the response
-if "choices" in response.json():
-    generated_text = response.json()["choices"][0]["text"]
-if "choices" not in response.json():
-    generated_text = "Error: " + response.json()["error"]["message"]
+response_text = json.loads(response.read())
+if "choices" in response_text:
+    generated_text = response_text["choices"][0]["text"]
+if "choices" not in response_text:
+    generated_text = "Error: " + response_text["error"]["message"]
 
 sys.stdout.write(generated_text)
